@@ -50,10 +50,7 @@ void Entity::load_obj_mesh(std::string file_name) {
 
             } //load normal
             else if (line == "vt") {}
-            else if (line == "s") {
-                getline(whole_line, line, delimiter);
-                if (std::stod(line) != 0) mesh_scale = std::stod(line);
-            }
+            else if (line == "s") {}
             else if (line == "f") {
                 int vert_ind = 0;
                 //int norm_ind = 0;
@@ -122,8 +119,9 @@ void Entity::update(Quaternion<double> rotation, const double dt) {
     orientation = orientation.slerp(dt, rotation);
     phys_mesh.verts_trans = orientation.toRotationMatrix() * phys_mesh.verts;
     phys_mesh.normals_trans = orientation.toRotationMatrix() * phys_mesh.normals;
-    phys_mesh.verts_trans.colwise() += position;
     phys_mesh.verts_trans *= render_mesh.scale;
+    phys_mesh.verts_trans.colwise() += position;
+
     for (int i=0; i<render_mesh.verts.size(); i++) {
         render_mesh.verts[i].position.x = phys_mesh.verts_trans(0,i);
         render_mesh.verts[i].position.y = phys_mesh.verts_trans(1,i);

@@ -11,12 +11,14 @@ void SIM::initialize() {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window and renderer: %s", SDL_GetError());
     }
 
+
     cube.load_obj_mesh("cube.obj");
     monkey.load_obj_mesh("monkey.obj");
     abby.load_obj_mesh("Abby.obj");
 
-    cube.position = Eigen::Vector3d(3, 3, 0);
-    cube.render_mesh.scale = 200;
+    SDL_GetWindowSizeInPixels(window,&window_width, &window_height);
+    cube.position = Eigen::Vector3d(window_width>>1, window_height>>1, 0); // setting position as middle of window
+    cube.render_mesh.scale = 100;
 
     time = 0;
     dt = (SDL_GetTicks() - time) * 1e-3;
@@ -25,18 +27,19 @@ void SIM::initialize() {
 void SIM::update_phys() {
     dt = (SDL_GetTicks() - time) * 1e-3;
     time = SDL_GetTicks();
-
     cube.update(Quaternion<double>(AngleAxisd(1.2,Eigen::Vector3d(0.9,0.5,0.3).normalized().eval())), dt);
 };
 
 
 void SIM::update_render() {
-    int window_height;
-    SDL_GetWindowSizeInPixels(window,NULL, &window_height);
-    for (auto &vert : cube.render_mesh.verts) {
+    int window_height, window_width;
+    SDL_GetWindowSizeInPixels(window,&window_width, &window_height);
+    cube.position = Eigen::Vector3d(window_width>>1, window_height>>1, 0); // setting position as middle of window
+    for (auto &vert : cube.render_mesh.verts) { // flipping vertically due to how SDL renders top down
         vert.position.y *= -1;
         vert.position.y += window_height;
     }
+    //std::cout << "x: " << cube.render_mesh.verts[0].position.x << "  y: " << cube.render_mesh.verts[0].position.y << std::endl;
 
     SDL_SetRenderDrawColor(renderer, 0x70, 0x00, 0x70, 0x00);
     SDL_RenderClear(renderer);

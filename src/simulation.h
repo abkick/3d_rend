@@ -28,6 +28,7 @@ public:
     double dt;
     SDL_Event event;
     SDL_Window *window = nullptr;
+    int window_height, window_width;
     SDL_Renderer *renderer = nullptr;
     SDL_Texture *texture = nullptr;
     SDL_Thread *phys_thread;

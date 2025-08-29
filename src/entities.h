@@ -5,6 +5,7 @@
 #ifndef INC_3D_REND_ENTITIES_H
 #define INC_3D_REND_ENTITIES_H
 
+#include <format>
 #include <Eigen/Dense>
 #include <SDL3/SDL.h>
 #include<iostream>
@@ -12,6 +13,14 @@
 #include<fstream>
 
 using namespace Eigen;
+
+typedef struct Triangle_Struct {
+    int vert_indices[3];
+    Eigen::Vector3d vert1, vert2, vert3;
+    Eigen::Vector3d normal;
+    double distance;
+    double get_distance() { return (vert1(2)+vert2(2)+vert3(2) );}
+}Triangle;
 
 typedef struct SDL_Mesh {
     std::vector<SDL_Vertex> verts;
@@ -23,9 +32,13 @@ typedef struct Physics_Mesh {
     Eigen::Matrix<double, 3, Dynamic> verts;
     Eigen::Matrix<double, 3, Dynamic> verts_trans; // mesh after world transformations, rotations, scaling, and translations
     std::vector<Vector4i> indices; // index of {vec, vec, vec, norm} of each triangle
+    std::vector<Vector4i> indices_culled;
     Eigen::Matrix<double, 3, Dynamic> normals;
     Eigen::Matrix<double, 3, Dynamic> normals_trans;
+    void sort_indices();
+    std::vector<Triangle> Triangles;
 } Phys_Mesh;
+
 
 
 class Entity {
@@ -37,7 +50,7 @@ public:
     SDL_Mesh render_mesh;
 
     void update(Quaternion<double> rotation, double dt);
-    void load_obj_mesh(std::string path);
+    int load_obj_mesh(std::string path); // returns 1 if failed
 };
 
 class Camera { //WIP

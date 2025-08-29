@@ -31,10 +31,9 @@ public:
     int window_height, window_width;
     SDL_Renderer *renderer = nullptr;
     SDL_Texture *texture = nullptr;
-    SDL_Thread *phys_thread;
     int data = 101;
 
-    Entity cube;
+    Entity cube = Entity();
     Entity monkey;
     Entity abby;
 

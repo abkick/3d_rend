@@ -11,7 +11,7 @@ void SIM::initialize() {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window and renderer: %s", SDL_GetError());
     }
 
-
+    //cube.load_obj_mesh("cube.obj");
     cube.load_obj_mesh("cube.obj");
     monkey.load_obj_mesh("monkey.obj");
     abby.load_obj_mesh("Abby.obj");
@@ -83,7 +83,6 @@ void SIM::run_main() {
 }
 
 SIM::~SIM() {
-    //SDL_WaitThread(phys_thread, nullptr);
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

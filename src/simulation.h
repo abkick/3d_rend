@@ -33,7 +33,8 @@ public:
     SDL_Texture *texture = nullptr;
     int data = 101;
 
-    Entity cube = Entity();
+    Entity current_entity;
+    Entity cube;
     Entity monkey;
     Entity abby;
 

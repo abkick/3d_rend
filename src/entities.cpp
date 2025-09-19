@@ -3,10 +3,11 @@
 //
 
 #include "entities.h"
-
 #include <filesystem>
+#include <fstream>
+#include <iostream>
 #include <random>
-#include<Eigen/StdVector>
+#include <Eigen/StdVector>
 
 
 template <typename T>

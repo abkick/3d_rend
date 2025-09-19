@@ -7,17 +7,7 @@
 
 #include <chrono>
 #include <SDL3/SDL.h>
-
-#include <SDL3/SDL_thread.h>
-#include <Eigen/Dense>
-#include <stdio.h>
-#include <stdlib.h>
 #include <cmath>
-#include <iostream>
-#include <stdexcept>
-#include <thread>
-#include <vector>
-
 #include "entities.h"
 
 class SIM {
@@ -33,7 +23,7 @@ public:
     SDL_Texture *texture = nullptr;
     int data = 101;
 
-    Entity current_entity;
+    Entity* current_entity;
     Entity cube;
     Entity monkey;
     Entity abby;

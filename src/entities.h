@@ -8,9 +8,8 @@
 #include <format>
 #include <Eigen/Dense>
 #include <SDL3/SDL.h>
-#include<iostream>
 #include<iomanip>
-#include<fstream>
+
 
 using namespace Eigen;
 
@@ -19,7 +18,7 @@ typedef struct Triangle_Struct {
     Eigen::Vector3d vert1, vert2, vert3;
     Eigen::Vector3d normal;
     double distance;
-    double get_distance() { return (vert1(2)+vert2(2)+vert3(2) );}
+    void get_distance() { distance = (vert1(2)+vert2(2)+vert3(2) );}
 }Triangle;
 
 typedef struct SDL_Mesh {
@@ -35,7 +34,6 @@ typedef struct Physics_Mesh {
     std::vector<Vector4i> indices_culled;
     Eigen::Matrix<double, 3, Dynamic> normals;
     Eigen::Matrix<double, 3, Dynamic> normals_trans;
-    void sort_indices();
     std::vector<Triangle> Triangles;
 } Phys_Mesh;
 
